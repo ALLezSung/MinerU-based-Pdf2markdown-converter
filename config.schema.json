@@ -1,0 +1,474 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input_root": {
+          "type": "string"
+        },
+        "state_dir": {
+          "type": "string"
+        },
+        "output_dir": {
+          "type": "string"
+        },
+        "delivery_dir": {
+          "type": "string"
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "directories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "include_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recursive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "parse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engine": {
+          "type": "string",
+          "const": "hosted_v4"
+        },
+        "model": {
+          "type": "string",
+          "enum": [
+            "vlm",
+            "pipeline"
+          ]
+        },
+        "language": {
+          "type": "string"
+        },
+        "is_ocr": {
+          "type": "boolean"
+        },
+        "enable_formula": {
+          "type": "boolean"
+        },
+        "enable_table": {
+          "type": "boolean"
+        },
+        "chunk_pages": {
+          "type": "integer"
+        },
+        "overlap_pages": {
+          "type": "integer"
+        },
+        "document_concurrency": {
+          "type": "integer"
+        },
+        "chunk_concurrency": {
+          "type": "integer"
+        },
+        "cache_dirs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_file_bytes": {
+          "type": "integer"
+        },
+        "max_download_bytes": {
+          "type": "integer"
+        },
+        "max_extract_bytes": {
+          "type": "integer"
+        }
+      }
+    },
+    "credentials": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "token_env_var": {
+          "type": "string"
+        },
+        "env_file": {
+          "type": "string"
+        }
+      }
+    },
+    "transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "api_base_url": {
+          "type": "string"
+        },
+        "backend": {
+          "type": "string"
+        },
+        "ipv4": {
+          "type": "boolean"
+        },
+        "connect_timeout": {
+          "type": "integer"
+        },
+        "api_read_timeout": {
+          "type": "integer"
+        },
+        "query_retries": {
+          "type": "integer"
+        },
+        "retry_backoff_base": {
+          "type": "integer"
+        },
+        "upload_timeout": {
+          "type": "integer"
+        },
+        "upload_connect_timeout": {
+          "type": "integer"
+        },
+        "download_timeout": {
+          "type": "integer"
+        },
+        "download_retries": {
+          "type": "integer"
+        },
+        "download_retry_delay": {
+          "type": "integer"
+        },
+        "poll_interval": {
+          "type": "integer"
+        },
+        "poll_timeout": {
+          "type": "integer"
+        },
+        "upload_poll_interval": {
+          "type": "integer"
+        },
+        "origin_fallbacks": {
+          "type": "object"
+        }
+      }
+    },
+    "cleaning": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "drop_block_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "drop_text_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "image_policy": {
+          "type": "string",
+          "enum": [
+            "omit",
+            "retain"
+          ]
+        },
+        "table_policy": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "per_page",
+            "engine_merged"
+          ]
+        },
+        "figure_caption": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "pattern": {
+              "type": "string"
+            },
+            "overlap_ratio": {
+              "type": "number"
+            },
+            "min_gap": {
+              "type": "integer"
+            },
+            "max_gap": {
+              "type": "integer"
+            }
+          }
+        },
+        "repeated_margin": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "max_chars": {
+              "type": "integer"
+            },
+            "min_pages": {
+              "type": "integer"
+            },
+            "top": {
+              "type": "integer"
+            },
+            "bottom": {
+              "type": "integer"
+            }
+          }
+        },
+        "paragraph_join": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "min_previous_chars": {
+              "type": "integer"
+            },
+            "max_page_gap": {
+              "type": "integer"
+            },
+            "left_tolerance": {
+              "type": "integer"
+            },
+            "separator": {
+              "type": "string"
+            },
+            "block_types": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "previous_end_pattern": {
+              "type": "string"
+            },
+            "next_start_pattern": {
+              "type": "string"
+            },
+            "next_heading_pattern": {
+              "type": "string"
+            }
+          }
+        },
+        "normalization": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "formula_tags": {
+              "type": "boolean"
+            },
+            "table_math_delimiters": {
+              "type": "boolean"
+            },
+            "table_math_entities": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "documents": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "defaults": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pilot_pages": {
+              "type": "string"
+            },
+            "pilot_reason": {
+              "type": "string"
+            },
+            "convert_pages": {
+              "type": "string"
+            },
+            "body_pages": {
+              "type": "string"
+            },
+            "deliver": {
+              "type": "boolean"
+            },
+            "drop_blocks": {
+              "type": "object"
+            },
+            "correct_blocks": {
+              "type": "object"
+            },
+            "disabled_joins": {
+              "type": "object"
+            },
+            "source_quality": {
+              "type": "object"
+            },
+            "review_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "match",
+              "set"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "match": {
+                "type": "string"
+              },
+              "set": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pilot_accepted": {
+          "type": "boolean"
+        },
+        "require_pilot": {
+          "type": "boolean"
+        },
+        "require_manual_review": {
+          "type": "boolean"
+        },
+        "required_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "require_empty_page_review": {
+          "type": "boolean"
+        },
+        "require_issue_acknowledgement": {
+          "type": "boolean"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "math_syntax": {
+          "type": "boolean"
+        },
+        "node_executable": {
+          "type": "string"
+        },
+        "katex_module": {
+          "type": "string"
+        },
+        "allow_empty_markdown": {
+          "type": "boolean"
+        },
+        "noise_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "blocking_issue_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "archive_name": {
+          "type": "string"
+        },
+        "report_name": {
+          "type": "string"
+        },
+        "manifest_name": {
+          "type": "string"
+        },
+        "markdown_folder": {
+          "type": "string"
+        },
+        "include_report": {
+          "type": "boolean"
+        },
+        "include_manifest": {
+          "type": "boolean"
+        },
+        "compression_level": {
+          "type": "integer"
+        },
+        "report_date": {
+          "type": "string"
+        },
+        "utc_offset": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reusable MinerU PDF conversion task"
+}

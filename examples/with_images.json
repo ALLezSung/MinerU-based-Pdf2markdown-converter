@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "task": {
+    "id": "new_task",
+    "name": "PDF转换任务"
+  },
+  "paths": {
+    "input_root": ".",
+    "state_dir": "state",
+    "output_dir": "output",
+    "delivery_dir": "delivery"
+  },
+  "input": {
+    "directories": [
+      "."
+    ],
+    "include_patterns": [
+      "*.pdf"
+    ],
+    "exclude_patterns": [],
+    "recursive": true
+  },
+  "parse": {
+    "engine": "hosted_v4",
+    "model": "vlm",
+    "language": "ch",
+    "is_ocr": true,
+    "enable_formula": true,
+    "enable_table": true,
+    "chunk_pages": 180,
+    "overlap_pages": 2,
+    "document_concurrency": 2,
+    "chunk_concurrency": 3,
+    "cache_dirs": [],
+    "max_file_bytes": 200000000,
+    "max_download_bytes": 1073741824,
+    "max_extract_bytes": 3221225472
+  },
+  "credentials": {
+    "token_env_var": "MINERU_API_KEY",
+    "env_file": ".env.local"
+  },
+  "transport": {
+    "api_base_url": "https://mineru.net/api/v4",
+    "backend": "auto",
+    "ipv4": true,
+    "connect_timeout": 15,
+    "api_read_timeout": 45,
+    "query_retries": 4,
+    "retry_backoff_base": 2,
+    "upload_timeout": 1800,
+    "upload_connect_timeout": 30,
+    "download_timeout": 600,
+    "download_retries": 1,
+    "download_retry_delay": 1,
+    "poll_interval": 5,
+    "poll_timeout": 1800,
+    "upload_poll_interval": 3,
+    "origin_fallbacks": {
+      "cdn-mineru.openxlab.org.cn": "mineru.oss-cn-shanghai.aliyuncs.com"
+    }
+  },
+  "cleaning": {
+    "drop_block_types": [
+      "header",
+      "footer",
+      "page_number",
+      "page_footnote_number",
+      "aside_text"
+    ],
+    "drop_text_patterns": [
+      "^The Ground Truth image",
+      "^The image contains",
+      "^The quick brown fox jumps"
+    ],
+    "image_policy": "retain",
+    "table_policy": "auto",
+    "figure_caption": {
+      "enabled": false,
+      "pattern": "图\\s*\\d+(?:[.\\-－]\\d+)*\\s+[^。！？；\\n]{1,65}",
+      "overlap_ratio": 0.6,
+      "min_gap": -5,
+      "max_gap": 70
+    },
+    "repeated_margin": {
+      "enabled": true,
+      "max_chars": 100,
+      "min_pages": 3,
+      "top": 120,
+      "bottom": 925
+    },
+    "paragraph_join": {
+      "enabled": true,
+      "min_previous_chars": 35,
+      "max_page_gap": 1,
+      "left_tolerance": 14,
+      "separator": "auto",
+      "block_types": [
+        "text",
+        "page_footnote"
+      ],
+      "previous_end_pattern": "[\\u4e00-\\u9fff，,]$",
+      "next_start_pattern": "[\\u4e00-\\u9fff]",
+      "next_heading_pattern": "^(?:第[一二三四五六七八九十\\d]+[章节]|[一二三四五六七八九十]+[、．.]|注[：:]|说明[：:]|式中[：:]|图\\s*\\d|表\\s*\\d)"
+    },
+    "normalization": {
+      "formula_tags": true,
+      "table_math_delimiters": true,
+      "table_math_entities": true
+    }
+  },
+  "documents": {
+    "defaults": {
+      "pilot_pages": "",
+      "pilot_reason": "",
+      "convert_pages": "all",
+      "body_pages": "",
+      "deliver": true,
+      "drop_blocks": {},
+      "correct_blocks": {},
+      "disabled_joins": {},
+      "source_quality": {},
+      "review_notes": ""
+    },
+    "rules": []
+  },
+  "review": {
+    "pilot_accepted": false,
+    "require_pilot": true,
+    "require_manual_review": true,
+    "required_flags": [
+      "body_ranges_reviewed",
+      "content_verified",
+      "continuity_verified",
+      "formula_table_verified"
+    ],
+    "require_empty_page_review": true,
+    "require_issue_acknowledgement": true
+  },
+  "validation": {
+    "math_syntax": true,
+    "node_executable": "node",
+    "katex_module": "",
+    "allow_empty_markdown": false,
+    "noise_patterns": [
+      "The quick brown fox",
+      "The image contains",
+      "According to Rule",
+      "\\[Empty String\\]"
+    ],
+    "blocking_issue_codes": [
+      "unrenderable_block",
+      "missing_asset",
+      "replacement_character",
+      "unbalanced_dollars",
+      "unconverted_math_delimiter"
+    ]
+  },
+  "delivery": {
+    "archive_name": "{task_id}_markdown.zip",
+    "report_name": "转换报告.md",
+    "manifest_name": "交付清单.json",
+    "markdown_folder": "Markdown",
+    "include_report": true,
+    "include_manifest": true,
+    "compression_level": 9,
+    "report_date": "",
+    "utc_offset": "+08:00",
+    "notes": []
+  }
+}
