@@ -1,4 +1,4 @@
-# 可复用的 PDF → Markdown 转换工作流
+# PDF → Markdown 转换工作流
 
 统一入口为 `converter.py`。支持 MinerU 托管精准 API 的 `vlm`、`pipeline` 模式；输入为 PDF，结果在本地按配置清洗、验证和打包。当前通用入口不支持本地 MinerU 或其他 OCR 后端。
 
@@ -57,7 +57,7 @@ $config = 'tasks/new_task/config.json'
 & $python $cli package --config $config
 ```
 
-`review --approve` 表示操作者已完成核验，并确认该文档的空页和告警。审核绑定当前 MD 哈希，内容变化需重新审核。机器检查不会自动批准人工审核；配置可明确关闭不需要的审核门槛。打包数量按实际清单生成，不固定为 24 份。
+`review --approve` 表示操作者已完成核验，并确认该文档的空页和告警。审核绑定当前 MD 哈希，内容变化需重新审核。机器检查不会自动批准人工审核；配置可明确关闭不需要的审核门槛。
 
 ## 常用配置
 
